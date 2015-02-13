@@ -136,6 +136,7 @@ QVariant DataModel::headerData(int section, Qt::Orientation orientation, int rol
                      return QString("Projet");
                  }
              }
+             //test
              else if (orientation == Qt::Vertical)
              {
                  return QString("%1").arg(section );
