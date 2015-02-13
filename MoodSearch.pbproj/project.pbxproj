@@ -1,0 +1,437 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 34;
+	objects = {
+		D7BA7D76DAB5DD13389D6332 = {
+			buildActionMask = 2147483647;
+			files = (
+				);
+			generatedFileNames = (
+				);
+			isa = PBXShellScriptBuildPhase;
+			name = "Qt Qmake";
+			neededFileNames = (
+				);
+			shellPath = "/bin/sh";
+			shellScript = "make\ -C\ /Users/manueldeneu/Documents/projets/MoodMaker/MoodSearch\ -f\ \'MoodSearch.pbproj/qt_makeqmake.mak\'";
+		};
+		118FCBAABA162BA17933C789 = {
+			isa = PBXFileReference;
+			name = "main.cpp";
+			path = "main.cpp";
+			refType = 4;
+		};
+		2B093CA6F071B023A473CED0 = {
+			fileRef = "118FCBAABA162BA17933C789";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		EA177DE95BF7D3EF58EE43F7 = {
+			isa = PBXFileReference;
+			name = "mainwindow.cpp";
+			path = "mainwindow.cpp";
+			refType = 4;
+		};
+		462C0F34BBEF2375A9469BB5 = {
+			fileRef = "EA177DE95BF7D3EF58EE43F7";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		B6314C1E7A57117E363590B8 = {
+			isa = PBXFileReference;
+			name = "videowidget.cpp";
+			path = "videowidget.cpp";
+			refType = 4;
+		};
+		6F8678901DBD4263A02C9924 = {
+			fileRef = "B6314C1E7A57117E363590B8";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		336D3C48DD3B44974395C633 = {
+			isa = PBXFileReference;
+			name = "moc_mainwindow.cpp";
+			path = "moc_mainwindow.cpp";
+			refType = 4;
+		};
+		26C2BED6C570C95F5243C556 = {
+			fileRef = "336D3C48DD3B44974395C633";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7E5DB8EBB1A0720B7758FE95 = {
+			isa = PBXFileReference;
+			name = "moc_videowidget.cpp";
+			path = "moc_videowidget.cpp";
+			refType = 4;
+		};
+		77632DB2E042DD8A9FE15320 = {
+			fileRef = "7E5DB8EBB1A0720B7758FE95";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		AFB98B37FF0012B837A2131C = {
+			isa = PBXFileReference;
+			name = "ui_mainwindow.h";
+			path = "ui_mainwindow.h";
+			refType = 4;
+		};
+		955774D8121E0E3A9439BAEA = {
+			isa = PBXFileReference;
+			name = "ui_videowidget.h";
+			path = "ui_videowidget.h";
+			refType = 4;
+		};
+		C63FA392C61F27B1B13369C1 = {
+			isa = PBXFileReference;
+			name = "mainwindow.h";
+			path = "mainwindow.h";
+			refType = 4;
+		};
+		40E7C7FBC0FE4B7C320D2B22 = {
+			isa = PBXFileReference;
+			name = "videowidget.h";
+			path = "videowidget.h";
+			refType = 4;
+		};
+		9DB4E2A263045ACDC3E20C70 = {
+			isa = PBXFileReference;
+			name = "MoodSearch.pro";
+			path = "MoodSearch.pro";
+			refType = 4;
+		};
+		AB241F823D3821A41AAC4BDE = {
+			isa = PBXFileReference;
+			name = "mainwindow.ui";
+			path = "mainwindow.ui";
+			refType = 4;
+		};
+		A5DB83BD78FE4205FDAD3FC5 = {
+			fileRef = "AB241F823D3821A41AAC4BDE";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		A83C7081BDA999349EFAFBB7 = {
+			isa = PBXFileReference;
+			name = "videowidget.ui";
+			path = "videowidget.ui";
+			refType = 4;
+		};
+		9FFCE879EB2EA59A569B22AA = {
+			fileRef = "A83C7081BDA999349EFAFBB7";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		883D7615C4D2DE3FA1218F12 = {
+			isa = PBXGroup;
+			children = (
+				"C63FA392C61F27B1B13369C1",
+				"40E7C7FBC0FE4B7C320D2B22");
+			name = "Headers";
+			refType = 4;
+		};
+		FB61758D0F0FDA4BA867C3D5 = {
+			isa = PBXGroup;
+			children = (
+				"118FCBAABA162BA17933C789",
+				"EA177DE95BF7D3EF58EE43F7",
+				"B6314C1E7A57117E363590B8");
+			name = "Sources";
+			refType = 4;
+		};
+		EEC299C65D5017EB9DD513B0 = {
+			isa = PBXGroup;
+			children = (
+				"AB241F823D3821A41AAC4BDE",
+				"A83C7081BDA999349EFAFBB7");
+			name = "Sources [UIC]";
+			refType = 4;
+		};
+		7CABE3C80E79AD2B307756D2 = {
+			isa = PBXGroup;
+			children = (
+				"9DB4E2A263045ACDC3E20C70");
+			name = "Sources [qmake]";
+			refType = 4;
+		};
+		46E892BBB6BB6952967E0561 = {
+			isa = PBXGroup;
+			children = (
+				"336D3C48DD3B44974395C633",
+				"7E5DB8EBB1A0720B7758FE95",
+				"AFB98B37FF0012B837A2131C",
+				"955774D8121E0E3A9439BAEA");
+			name = "Temporary Sources";
+			refType = 4;
+		};
+		A0A52A2ADF7A1E2A99738674 = {
+			buildActionMask = 2147483647;
+			files = (
+				);
+			generatedFileNames = (
+				"2B093CA6F071B023A473CED0",
+				"462C0F34BBEF2375A9469BB5",
+				"6F8678901DBD4263A02C9924",
+				"26C2BED6C570C95F5243C556",
+				"77632DB2E042DD8A9FE15320");
+			isa = PBXShellScriptBuildPhase;
+			name = "Qt Preprocessors";
+			neededFileNames = (
+				"2B093CA6F071B023A473CED0",
+				"462C0F34BBEF2375A9469BB5",
+				"6F8678901DBD4263A02C9924",
+				"26C2BED6C570C95F5243C556",
+				"77632DB2E042DD8A9FE15320");
+			shellPath = "/bin/sh";
+			shellScript = "make\ -C\ /Users/manueldeneu/Documents/projets/MoodMaker/MoodSearch\ -f\ \'MoodSearch.pbproj/qt_preprocess.mak\'";
+		};
+		C29B8785722055ED95EF7B57 = {
+			buildActionMask = 2147483647;
+			files = (
+				"2B093CA6F071B023A473CED0",
+				"462C0F34BBEF2375A9469BB5",
+				"6F8678901DBD4263A02C9924",
+				"26C2BED6C570C95F5243C556",
+				"77632DB2E042DD8A9FE15320");
+			isa = PBXSourcesBuildPhase;
+			name = "Build Sources";
+		};
+		9B36DA7E32F0304E780E7972 = {
+			isa = PBXFrameworkReference;
+			name = "QtGui.framework";
+			path = "/Library/Frameworks/QtGui.framework";
+			refType = 0;
+		};
+		501667F26B3C1FF6767A7C12 = {
+			fileRef = "9B36DA7E32F0304E780E7972";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7BC2E65A5E699A5E5D834CA2 = {
+			isa = PBXFrameworkReference;
+			name = "QtCore.framework";
+			path = "/Library/Frameworks/QtCore.framework";
+			refType = 0;
+		};
+		069D05B0128AE5DC7EE31738 = {
+			fileRef = "7BC2E65A5E699A5E5D834CA2";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		ED1E82605DD74B483AF3C982 = {
+			children = (
+				"9B36DA7E32F0304E780E7972",
+				"7BC2E65A5E699A5E5D834CA2");
+			isa = PBXGroup;
+			name = "External Frameworks and Libraries";
+			path = "";
+			refType = 4;
+		};
+		2A1043669E6E5A7426EA502A = {
+			buildActionMask = 2147483647;
+			files = (
+				"501667F26B3C1FF6767A7C12",
+				"069D05B0128AE5DC7EE31738");
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		3787F99312C85FF0073FD7BA = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		F6069D5A5DA8AA28EDB8B3C6 = {
+			name = "Project Copy";
+			buildActionMask = 2147483647;
+			dstPath = "/Users/manueldeneu/Documents/projets/MoodMaker/MoodSearch";
+			dstSubfolderSpec = 0;
+			files = (
+"07E0DFA73EB56DCB9E28CDD9");
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07E0DFA73EB56DCB9E28CDD9 = {
+			fileRef = "3F5CED760320D9AE654EA918";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		05596AB53D8D521C69802C27 = {
+			children = (
+				"FB61758D0F0FDA4BA867C3D5",
+				"46E892BBB6BB6952967E0561",
+				"883D7615C4D2DE3FA1218F12",
+				"7CABE3C80E79AD2B307756D2",
+				"EEC299C65D5017EB9DD513B0",
+				"ED1E82605DD74B483AF3C982");
+			isa = PBXGroup;
+			name = "MoodSearch";
+			path = "";
+			refType = 4;
+		};
+		3F5CED760320D9AE654EA918 = {
+			isa = PBXFileReference;
+			explicitFileType = "wrapper.application";
+			path = "MoodSearch.app";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		068F80C7519D0528FB08E821 = {
+			children = (
+				"3F5CED760320D9AE654EA918");
+			isa = PBXGroup;
+			name = "Products";
+			refType = 4;
+		};
+		159B53309611C858F815D530 = {
+			buildPhases = (
+				"D7BA7D76DAB5DD13389D6332",
+				"A0A52A2ADF7A1E2A99738674",
+				"F6069D5A5DA8AA28EDB8B3C6",
+				"C29B8785722055ED95EF7B57",
+				"2A1043669E6E5A7426EA502A",
+				"3787F99312C85FF0073FD7BA");
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"/Library/Frameworks/QtCore.framework/Versions/4/Headers",
+					"/usr/include/QtCore",
+					"/Library/Frameworks/QtGui.framework/Versions/4/Headers",
+					"/usr/include/QtGui",
+					"/usr/include",
+					".",
+					".",
+					"/usr/local/include",
+					"/System/Library/Frameworks/CarbonCore.framework/Headers",
+					"/usr/local/Qt4.7/mkspecs/macx-xcode");
+				LIBRARY_SEARCH_PATHS = (
+					"/Library/Frameworks");
+				OPTIMIZATION_CFLAGS = (
+					);
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED");
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED");
+				LEXFLAGS = "";
+				YACCFLAGS = "-d";
+				OTHER_REZFLAGS = "";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "";
+				PREBINDING = NO;
+				INFOPLIST_FILE = "Info.plist";
+				BUILD_ROOT = "/Users/manueldeneu/Documents/projets/MoodMaker/MoodSearch";
+				OTHER_LDFLAGS = (
+						"-headerpad_max_install_names",
+						"-L/Library/Frameworks",
+						"-F/Library/Frameworks");
+				DYLIB_CURRENT_VERSION = "1.0.0";
+				DYLIB_COMPATIBILITY_VERSION = "1.0";
+				MACOSX_DEPLOYMENT_TARGET = "10.4";
+				WRAPPER_SUFFIX = "app";
+				PRODUCT_NAME = "MoodSearch";
+			};
+			conditionalBuildSettings = {
+			};
+			dependencies = (
+				);
+			productReference = "3F5CED760320D9AE654EA918";
+			shouldUseHeadermap = 1;
+			isa = PBXApplicationTarget;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+    <key>CFBundleGetInfoString</key>
+	<string>Created by Qt/QMake</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleExecutable</key>
+	<string>MoodSearch</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.yourcompany.MoodSearch</string>
+	<key>NOTE</key>
+	<string>This file was generated by Qt/QMake.</string>
+</dict>
+</plist>
+";
+			name = "MoodSearch";
+			productName = "MoodSearch";
+			startupPath = "<<ProjectDirectory>>";
+		};
+		8D0921A599A626D1569D9498 = {
+			buildRules = (
+				);
+			buildSettings = {
+				COPY_PHASE_STRIP = "NO";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+			};
+			isa = "PBXBuildStyle";
+			name = "Development";
+		};
+		4CFAD8B741C7FF5A47E1CF98 = {
+			buildRules = (
+				);
+			buildSettings = {
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+			};
+			isa = "PBXBuildStyle";
+			name = "Deployment";
+		};
+		91B15E841AA80083484172DE = {
+			buildStyles = (
+				"8D0921A599A626D1569D9498");
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = "05596AB53D8D521C69802C27";
+			projectDirPath = "";
+			targets = (
+				"159B53309611C858F815D530");
+		};
+	};
+	rootObject = "91B15E841AA80083484172DE";
+}
