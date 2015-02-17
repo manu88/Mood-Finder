@@ -4,6 +4,8 @@
 
 #include <QMessageBox>
 
+
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -18,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     ui->dockWidget->setWidget( &_player);
+
     ui->tableView->setModel( &_model);
 
     restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
@@ -25,11 +28,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMettre_jour, SIGNAL(triggered()) , this , SLOT(updateDirClicked()) );
     connect(ui->actionSave_XML, SIGNAL(triggered()) , this , SLOT(saveClicked()) );
 
+    connect(ui->actionPr_f_rences , SIGNAL(triggered()) , this, SLOT(PreferencesClicked()) );
+
     setWindowTitle(APP_NAME);
 
-    //resetSettings();
-
-
+    /* restore settings */
     restoreState(settings.value("mainWindowState").toByteArray());
     restoreDockWidget(ui->dockWidget);
 
@@ -99,8 +102,6 @@ void MainWindow::saveSettings()
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
 void MainWindow::closeEvent( QCloseEvent *event)
 {
-
-    qDebug("close Event");
     saveSettings();
 }
 
@@ -159,5 +160,15 @@ void MainWindow::saveClicked()
     _model.compareAndSaveXML( tr(DIR_XML) + tr(NAME_XML));
 }
 
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::PreferencesClicked()
+{
+    SettingsDialog *dial = new SettingsDialog(this);
+
+    int ret = dial->exec();
+
+}
 
 
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */

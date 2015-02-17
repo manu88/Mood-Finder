@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     VideoDockWidget.cpp \
     player.cpp \
     playercontrols.cpp \
-    videowidget.cpp
+    videowidget.cpp \
+    SettingsDialog.cpp
 
 HEADERS  += mainwindow.h \
     datamodel.h \
@@ -28,7 +29,9 @@ HEADERS  += mainwindow.h \
     VideoDockWidget.h \
     player.h \
     playercontrols.h \
-    videowidget.h
+    videowidget.h \
+    SettingsDialog.h
 
 FORMS    += mainwindow.ui \
-    videodockwidget.ui
+    videodockwidget.ui \
+    SettingsDialog.ui

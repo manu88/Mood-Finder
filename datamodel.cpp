@@ -136,7 +136,7 @@ QVariant DataModel::headerData(int section, Qt::Orientation orientation, int rol
                      return QString("Projet");
                  }
              }
-             //test
+
              else if (orientation == Qt::Vertical)
              {
                  return QString("%1").arg(section );
@@ -173,9 +173,28 @@ void DataModel::parseProjectDirectory( const QString &dirPath)
         if ( (proj != ".") && (proj != "..") )
         {
             //qDebug("got a dir %s", proj.toStdString().c_str());
-            QDir media(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME);
+            QDir media;
+            media.setPath(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME);
 
-            if ( media.exists())
+            if ( !media.exists() )
+                media.setPath(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME2);
+
+            if ( !media.exists() )
+                media.setPath(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME3);
+
+            if ( !media.exists() )
+                media.setPath(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME4);
+
+            if ( !media.exists() )
+                media.setPath(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME5);
+
+            if ( !media.exists() )
+                media.setPath(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME6);
+
+            if ( !media.exists() )
+                media.setPath(dir.absolutePath() +"/" + proj + "/" + DIR_RUSHES_NAME7);
+
+            if ( media.exists() )
             {
                 //qDebug("found rushes file for %s", proj.toStdString().c_str());
 

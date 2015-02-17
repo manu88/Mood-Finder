@@ -6,7 +6,7 @@
 #include <QSettings>
 
 #include "VideoDockWidget.h"
-
+#include "SettingsDialog.h"
 #include "datamodel.h"
 #include "player.h"
 
@@ -14,7 +14,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public SettingsDialogDelegate
 {
     Q_OBJECT
 
@@ -25,12 +25,23 @@ public:
     const QString getProjectDirectory() const;
 
 
+    /* Settings delegate*/
+    QString getRootDir() const
+    {
+        return getProjectDirectory();
+    }
+    void setRootDir( const QString &newDir)
+    {
+        setProjectDirectory( newDir );
+    }
 
 public slots:
     void updateDirClicked();
     void chooseProjectDirClicked();
 
     void saveClicked();
+
+    void PreferencesClicked();
 
 
 private:

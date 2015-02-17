@@ -50,7 +50,7 @@
     <item>
      <widget class="QTableView" name="tableView">
       <attribute name="verticalHeaderVisible">
-       <bool>true</bool>
+       <bool>false</bool>
       </attribute>
      </widget>
     </item>
@@ -71,6 +71,7 @@
     </property>
     <addaction name="actionMettre_jour"/>
     <addaction name="actionSave_XML"/>
+    <addaction name="actionPr_f_rences"/>
    </widget>
    <addaction name="menuBase_de_donn_es"/>
   </widget>
@@ -97,6 +98,11 @@
   <action name="actionSave_XML">
    <property name="text">
     <string>save XML</string>
+   </property>
+  </action>
+  <action name="actionPr_f_rences">
+   <property name="text">
+    <string>Préférences</string>
    </property>
   </action>
  </widget>
