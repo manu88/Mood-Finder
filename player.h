@@ -57,7 +57,6 @@ class QModelIndex;
 class QPushButton;
 class QSlider;
 class QVideoProbe;
-//class QVideoWidget;
 QT_END_NAMESPACE
 
 

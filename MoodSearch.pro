@@ -17,7 +17,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     datamodel.cpp \
-    VideoDockWidget.cpp \
     player.cpp \
     playercontrols.cpp \
     videowidget.cpp \
@@ -26,12 +25,12 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     datamodel.h \
     commons.h \
-    VideoDockWidget.h \
     player.h \
     playercontrols.h \
     videowidget.h \
     SettingsDialog.h
 
 FORMS    += mainwindow.ui \
-    videodockwidget.ui \
     SettingsDialog.ui
+
+QMAKE_CXXFLAGS += -std=c++11

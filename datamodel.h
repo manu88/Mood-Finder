@@ -11,6 +11,20 @@ struct Timecode
         seconds ( 0 ),
         millis  ( 0 )
     {}
+
+    Timecode( const QString &str)
+    {
+        auto list = str.split(":");
+
+        if (list.size() == 4)
+        {
+            hours   = list[0].toInt();
+            minutes = list[1].toInt();
+            seconds = list[2].toInt();
+            millis  = list[3].toInt();
+        }
+    }
+
     unsigned int hours;
     unsigned int minutes;
     unsigned int seconds;
@@ -95,6 +109,11 @@ public:
     bool loadXML( const QString &fromFile);
 
     bool compareAndSaveXML( const QString &toFile);
+
+    const DataEntry &getEntryForIndex( int index)
+    {
+        return _dataList.at(index);
+    }
 
 signals:
 

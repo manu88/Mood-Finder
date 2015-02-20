@@ -9,17 +9,23 @@ SettingsDialog::SettingsDialog(SettingsDialogDelegate *delegate) :
 {
     ui->setupUi(this);
 
-    ui->rootDirLineEdit->setText( _delegate->getRootDir() );
+    ui->rootDirLineEdit->setText(       _delegate->getProjectDirectory()  );
+    ui->nameXmlEdit->setText(           _delegate->getXMLName() );
+    ui->xmlLocationLocalEdit->setText(  _delegate->getLocalXMLLocation()  );
+    ui->xmlLocationServerEdit->setText( _delegate->getServerXMLLocation() );
+    ui->backupCount->setValue(          _delegate->getNumBackup()         );
 
     connect( ui->browseRootDirButton , SIGNAL(clicked()) , this , SLOT(setRootDirClicked()) );
-
-
+    connect( ui->browseXMLLocal, SIGNAL(clicked()) , this , SLOT(setLocalXMLLocationClicked()) );
+    connect( ui->browseXMLServer, SIGNAL(clicked()) , this , SLOT(setServerXMLLocationClicked()) );
 }
 
 SettingsDialog::~SettingsDialog()
 {
     delete ui;
 }
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
 
 void SettingsDialog::setRootDirClicked()
 {
@@ -31,6 +37,48 @@ void SettingsDialog::setRootDirClicked()
           const QString newDir = dialog.selectedFiles().at(0);
           //qDebug("new Dir is : %s",newDir.toStdString().c_str() );
 
-          _delegate->setRootDir( newDir );
+
      }
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void SettingsDialog::setLocalXMLLocationClicked()
+{
+
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void SettingsDialog::setServerXMLLocationClicked()
+{
+
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+QString SettingsDialog::getRootDir() const
+{
+    return ui->rootDirLineEdit->text();
+}
+
+QString SettingsDialog::getXmlName() const
+{
+    return ui->nameXmlEdit->text();
+}
+
+QString SettingsDialog::getLocalXmlLocationDir() const
+{
+    return ui->xmlLocationLocalEdit->text();
+}
+
+QString SettingsDialog::getServerXmlLocationDir() const
+{
+    return ui->xmlLocationServerEdit->text();
+}
+
+int SettingsDialog::getNumBackup() const
+{
+    return ui->backupCount->value();
+
 }

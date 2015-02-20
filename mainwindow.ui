@@ -50,7 +50,7 @@
     <item>
      <widget class="QTableView" name="tableView">
       <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
      </widget>
     </item>
@@ -75,20 +75,26 @@
    </widget>
    <addaction name="menuBase_de_donn_es"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSave_XML"/>
+   <addaction name="actionMettre_jour"/>
+   <addaction name="actionPr_f_rences"/>
   </widget>
   <action name="actionMettre_jour">
    <property name="text">

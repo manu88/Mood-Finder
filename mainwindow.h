@@ -5,7 +5,7 @@
 #include <QDir>
 #include <QSettings>
 
-#include "VideoDockWidget.h"
+//#include "VideoDockWidget.h"
 #include "SettingsDialog.h"
 #include "datamodel.h"
 #include "player.h"
@@ -23,17 +23,17 @@ public:
     ~MainWindow();
 
     const QString getProjectDirectory() const;
-
+    const QString getXMLName() const;
+    const QString getLocalXMLLocation() const;
+    const QString getServerXMLLocation() const;
+    int           getNumBackup() const;
 
     /* Settings delegate*/
     QString getRootDir() const
     {
         return getProjectDirectory();
     }
-    void setRootDir( const QString &newDir)
-    {
-        setProjectDirectory( newDir );
-    }
+
 
 public slots:
     void updateDirClicked();
@@ -43,14 +43,19 @@ public slots:
 
     void PreferencesClicked();
 
+    void verticalHeaderDoubleClicked( int index );
+
 
 private:
     void closeEvent( QCloseEvent *event) ;
     void resetSettings();
     void saveSettings();
 
-    void setProjectDirectory( const QString &dir );
-
+    void setProjectDirectory(  const QString &dir );
+    void setXMLName(  const QString &name );
+    void setLocalXMLLocation(  const QString &dir );
+    void setServerXMLLocation( const QString &dir );
+    void setNumBackup( int num);
 
     Ui::MainWindow *ui;
 

@@ -75,9 +75,7 @@ bool DataModel::setData(const QModelIndex & index, const QVariant & value, int r
     if (role == Qt::EditRole)
     {
 
-
         emit editCell(index.row() , index.column() , value.toString());
-
 
     }
     return true;
@@ -295,7 +293,7 @@ bool DataModel::loadXML( const QString &fromFile)
     _dataList.clear();
     for ( QDomNode node = rushes.firstChild(); !node.isNull() ; node=node.nextSibling()  )
     {
-        if (node.isElement())
+        if (node.isElement() && (node.toElement().tagName()=="ENTRY") )
         {
             const QDomElement elem = node.toElement();
 
@@ -304,14 +302,19 @@ bool DataModel::loadXML( const QString &fromFile)
             DataEntry entry;
 
             entry.filePath = node.toElement().tagName();
+
+
+
             for (int i =0; i< attr.size(); i++)
             {
                 if (attr.at(i).isElement())
                 {
                     const QDomElement elem = attr.at(i).toElement();
 
+                    if ( elem.tagName() == "PATH")
+                        entry.filePath = elem.text();
 
-                    if ( elem.tagName() == "PROJECT" )
+                    else if ( elem.tagName() == "PROJECT" )
                         entry.projectName = elem.text();
 
                     else if ( elem.tagName() == "DESC" )
@@ -319,6 +322,9 @@ bool DataModel::loadXML( const QString &fromFile)
 
                     else if ( elem.tagName() == "REM" )
                         entry.remarques = elem.text();
+
+                    else if ( elem.tagName() == "TC")
+                        entry.timecode = Timecode(elem.text() );
                 }
 
             }
@@ -329,8 +335,12 @@ bool DataModel::loadXML( const QString &fromFile)
 
         }
 
+        else
+        {
+            qDebug() << "Node is not Element";
+        }
 
-        //qDebug("Rush name %s", fileName.toStdString().c_str());
+
     }
 
     endResetModel();
@@ -371,11 +381,12 @@ bool DataModel::compareAndSaveXML( const QString &toFile)
 
     foreach (const DataEntry &entry, _dataList)
     {
-        xmlWriter.writeStartElement(entry.filePath);
+        xmlWriter.writeStartElement("ENTRY");
         xmlWriter.writeTextElement("PROJECT", entry.projectName );
         xmlWriter.writeTextElement("DESC",entry.description);
         xmlWriter.writeTextElement("TC",Timecode::tcToQString(entry.timecode) );
         xmlWriter.writeTextElement("REM",entry.remarques );
+        xmlWriter.writeTextElement("PATH",entry.filePath);
         xmlWriter.writeEndElement();
     }
 

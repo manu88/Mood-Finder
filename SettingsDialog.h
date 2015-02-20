@@ -17,8 +17,11 @@ protected:
     virtual~SettingsDialogDelegate()
     {}
 
-    virtual QString getRootDir() const = 0;
-    virtual void    setRootDir( const QString &newDir) = 0;
+    virtual const QString getProjectDirectory() const = 0;
+    virtual const QString getXMLName() const = 0;
+    virtual const QString getLocalXMLLocation() const = 0;
+    virtual const QString getServerXMLLocation() const = 0;
+    virtual int           getNumBackup() const = 0;
 };
 
 class SettingsDialog : public QDialog
@@ -29,9 +32,16 @@ public:
     explicit SettingsDialog( SettingsDialogDelegate *delegate);
     ~SettingsDialog();
 
+    QString getRootDir() const;
+    QString getXmlName() const;
+    QString getLocalXmlLocationDir() const;
+    QString getServerXmlLocationDir() const;
+    int     getNumBackup() const;
+
 private slots:
     void setRootDirClicked();
-
+    void setLocalXMLLocationClicked();
+    void setServerXMLLocationClicked();
 private:
     Ui::SettingsDialog *ui;
 

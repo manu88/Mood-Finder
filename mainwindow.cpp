@@ -30,6 +30,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionPr_f_rences , SIGNAL(triggered()) , this, SLOT(PreferencesClicked()) );
 
+    connect(ui->tableView->verticalHeader(), SIGNAL(sectionDoubleClicked(int)) ,
+                this ,SLOT(verticalHeaderDoubleClicked(int)));
+
+
     setWindowTitle(APP_NAME);
 
     /* restore settings */
@@ -66,11 +70,75 @@ void MainWindow::setProjectDirectory( const QString &dir )
     settings.sync();
 }
 
+void MainWindow::setXMLName(  const QString &name )
+{
+    QSettings settings;
+    settings.setValue( NAME_XML_TOK , name);
+
+    settings.sync();
+}
+
+void MainWindow::setLocalXMLLocation(  const QString &dir )
+{
+    QSettings settings;
+    settings.setValue(DIR_LOCAL_XML_TOK , dir);
+
+    settings.sync();
+}
+
+void MainWindow::setServerXMLLocation( const QString &dir )
+{
+    QSettings settings;
+    settings.setValue(DIR_SERVER_XML_TOK , dir);
+
+    settings.sync();
+}
+
+void MainWindow::setNumBackup( int num)
+{
+    QSettings settings;
+    settings.setValue(NUM_BACKUPS_TOK , num);
+
+    settings.sync();
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
 const QString MainWindow::getProjectDirectory() const
 {
     QSettings settings;
     return settings.value(DIR_PROJECT_TOK).toString();
 }
+
+const QString MainWindow::getXMLName() const
+{
+    QSettings settings;
+    return settings.value(NAME_XML_TOK).toString();
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+const QString MainWindow::getLocalXMLLocation() const
+{
+    QSettings settings;
+    return settings.value(DIR_LOCAL_XML_TOK).toString();
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+const QString MainWindow::getServerXMLLocation() const
+{
+    QSettings settings;
+    return settings.value(DIR_SERVER_XML_TOK).toString();
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+int MainWindow::getNumBackup() const
+{
+    QSettings settings;
+    return settings.value(NUM_BACKUPS_TOK).toInt();
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
 
 void MainWindow::resetSettings()
 {
@@ -117,7 +185,7 @@ void MainWindow::updateDirClicked()
         chooseProjectDirClicked();
     }
 
-    if( !_model.loadXML( tr(DIR_XML) + tr(NAME_XML)) )
+    if( !_model.loadXML( getLocalXMLLocation() + getXMLName() + ".xml" ) )
     {
         QMessageBox msgBox;
         msgBox.setText("No xml file found.");
@@ -131,9 +199,7 @@ void MainWindow::updateDirClicked()
             _model.parseProjectDirectory( getProjectDirectory() );
     }
 
-    //
 
-    //_model.compareAndSaveXML( tr(DIR_XML) + tr(NAME_XML));
 
 }
 
@@ -157,7 +223,7 @@ void MainWindow::chooseProjectDirClicked()
 
 void MainWindow::saveClicked()
 {
-    _model.compareAndSaveXML( tr(DIR_XML) + tr(NAME_XML));
+    _model.compareAndSaveXML( getLocalXMLLocation() + getXMLName() + ".xml" );
 }
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
@@ -166,9 +232,28 @@ void MainWindow::PreferencesClicked()
 {
     SettingsDialog *dial = new SettingsDialog(this);
 
-    int ret = dial->exec();
+    if (dial->exec())
+    {
+        setProjectDirectory( dial->getRootDir() );
+        setXMLName( dial->getXmlName() );
+        setLocalXMLLocation( dial->getLocalXmlLocationDir() );
+        setServerXMLLocation( dial->getServerXmlLocationDir() );
+        setNumBackup( dial->getNumBackup() );
+    }
+
+
+    delete dial;
+
 
 }
 
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+void MainWindow::verticalHeaderDoubleClicked( int index )
+{
+    const DataEntry entry = _model.getEntryForIndex( index);
+
+    qDebug() << "Should play " << entry.filePath << "at TC " << Timecode::tcToQString(entry.timecode) ;
+}
+
+

@@ -8,12 +8,16 @@
 
 /* settings names*/
 
-#define DIR_PROJECT_TOK "ProjectDir"
+#define DIR_PROJECT_TOK    "ProjectDir"
+#define DIR_LOCAL_XML_TOK  "LocalXMLDir"
+#define DIR_SERVER_XML_TOK "ServerXMLDir"
+#define NUM_BACKUPS_TOK    "NumBackups"
+#define NAME_XML_TOK       "XMLName"
 
-/* dir names */
 
-#define DIR_XML         "/Users/manueldeneu/Documents/projets/MoodMaker/"
-#define NAME_XML        "MoodDataBase.xml"
+
+//#define DIR_XML         "/Users/manueldeneu/Documents/projets/MoodMaker/"
+
 
 #define DIR_RUSHES_NAME "Rushs"
 #define DIR_RUSHES_NAME2 "Rushes"

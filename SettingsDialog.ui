@@ -17,20 +17,10 @@
    <property name="fieldGrowthPolicy">
     <enum>QFormLayout::FieldsStayAtSizeHint</enum>
    </property>
-   <item row="2" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="rootDir">
      <property name="text">
-      <string>Répertoire racine</string>
+      <string>Répertoire racine des projets</string>
      </property>
     </widget>
    </item>
@@ -48,6 +38,101 @@
     <widget class="QPushButton" name="browseRootDirButton">
      <property name="text">
       <string>parcourir</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Localisation du XML sur le serveur</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="xmlLocationServerEdit">
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="browseXMLServer">
+     <property name="text">
+      <string>parcourir</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Localisation du XML en local</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="xmlLocationLocalEdit">
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QPushButton" name="browseXMLLocal">
+     <property name="text">
+      <string>parcourir</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Nombre de backups </string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QSpinBox" name="backupCount">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximum">
+      <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Nom du ficher (sans extension)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="nameXmlEdit">
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>0</height>
+      </size>
      </property>
     </widget>
    </item>
