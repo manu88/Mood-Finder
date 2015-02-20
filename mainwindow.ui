@@ -19,7 +19,7 @@
      <widget class="QSplitter" name="splitter">
       <property name="maximumSize">
        <size>
-        <width>477</width>
+        <width>554</width>
         <height>32</height>
        </size>
       </property>
@@ -45,6 +45,24 @@
         <string>search</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="clrSearchButton">
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>clear</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="searchLabel">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
      </widget>
     </item>
     <item>
@@ -73,7 +91,23 @@
     <addaction name="actionSave_XML"/>
     <addaction name="actionPr_f_rences"/>
    </widget>
+   <widget class="QMenu" name="menuServeur">
+    <property name="title">
+     <string>Serveur</string>
+    </property>
+    <addaction name="actionPousser"/>
+    <addaction name="actionTirer"/>
+   </widget>
+   <widget class="QMenu" name="menuEdition">
+    <property name="title">
+     <string>Edition</string>
+    </property>
+    <addaction name="actionDuplicate"/>
+    <addaction name="actionDelete"/>
+   </widget>
    <addaction name="menuBase_de_donn_es"/>
+   <addaction name="menuEdition"/>
+   <addaction name="menuServeur"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
@@ -109,6 +143,26 @@
   <action name="actionPr_f_rences">
    <property name="text">
     <string>Préférences</string>
+   </property>
+  </action>
+  <action name="actionPousser">
+   <property name="text">
+    <string>Pousser</string>
+   </property>
+  </action>
+  <action name="actionTirer">
+   <property name="text">
+    <string>Tirer</string>
+   </property>
+  </action>
+  <action name="actionDuplicate">
+   <property name="text">
+    <string>Dupliquer entrée</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Supprimer entrée</string>
    </property>
   </action>
  </widget>

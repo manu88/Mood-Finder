@@ -28,3 +28,22 @@
 #define DIR_RUSHES_NAME7 "rushs"
 #endif // COMMONS
 
+/* XML entries names*/
+
+#define XML_TAG_ROOT      "ROOT"
+
+#define XML_TAG_HEADER    "HEADER"
+#define XML_TAG_SAVE_DATE "DATE"
+
+
+#define XML_TAG_RUSHES    "RUSHES"
+
+#define XML_TAG_ENTRY     "ENTRY"
+#define XML_TAG_PROJECT   "PROJECT"
+#define XML_TAG_DESC      "DESC"
+#define XML_TAG_TIMECODE  "TC"
+#define XML_TAG_REMARK    "REM"
+#define XML_TAG_PATH      "PATH"
+
+
+

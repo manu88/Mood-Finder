@@ -5,12 +5,16 @@
 #include <QFile>
 #include <QDir>
 
+
 #include "commons.h"
 #include "datamodel.h"
 
 
-DataModel::DataModel(QObject *parent)
+DataModel::DataModel(QObject *parent) :
+    _editedInSearchMode ( false ),
+    _currentMode        ( DataListMode )
 {
+    _currentList = &_dataList;
     connect(this , SIGNAL(editCell(int,int,QString)) , this , SLOT(didEditCell(int,int,QString)) );
 }
 
@@ -23,7 +27,7 @@ DataModel::~DataModel()
 
 int DataModel::rowCount(const QModelIndex &parent) const
 {
-    return _dataList.size();
+    return _currentList->size();
 }
 int DataModel::columnCount(const QModelIndex &parent) const
 {
@@ -34,13 +38,11 @@ int DataModel::columnCount(const QModelIndex &parent) const
 
 QVariant DataModel::data(const QModelIndex &index, int role ) const
 {
-    if (role == Qt::EditRole  )
-    {
 
-    }
-    else if (role == Qt::DisplayRole)
+
+    if ((role == Qt::DisplayRole) || (role == Qt::EditRole  ) )
     {
-        const DataEntry & entry = _dataList.at(index.row());
+        const DataEntry & entry = _currentList->at(index.row());
 
         switch (index.column())
         {
@@ -75,7 +77,7 @@ bool DataModel::setData(const QModelIndex & index, const QVariant & value, int r
     if (role == Qt::EditRole)
     {
 
-        emit editCell(index.row() , index.column() , value.toString());
+        emit editCell( index.row() , index.column() , value.toString() );
 
     }
     return true;
@@ -85,7 +87,11 @@ bool DataModel::setData(const QModelIndex & index, const QVariant & value, int r
 
 void DataModel::didEditCell( int row , int col, const QString &value)
 {
-    DataEntry &entry = _dataList[row];
+
+    if (_currentMode == DataSearchMode)
+        _editedInSearchMode = true;
+
+    DataEntry &entry = (*_currentList)[ row ];
 
     switch ( col )
     {
@@ -98,14 +104,14 @@ void DataModel::didEditCell( int row , int col, const QString &value)
 
         break;
     case 2: //Timecode
-        qDebug("edit TC for %i '%s'",row,value.toStdString().c_str());
+        entry.timecode = Timecode(value);
         break;
     case 3: // Remarques
         entry.remarques = value;
 
         break;
     case 4: //Projet
-        qDebug("edit projet for %i '%s'",row,value.toStdString().c_str());
+
         break;
     }
 
@@ -142,6 +148,39 @@ QVariant DataModel::headerData(int section, Qt::Orientation orientation, int rol
          }
          return QVariant();
 
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void DataModel::ChangePresentationModeTo( DataPresentationMode mode )
+{
+    if (mode != _currentMode)
+    {
+        // emit change in data
+        beginResetModel();
+
+        _currentMode = mode;
+
+        // back to the whole list
+        if ( _currentMode == DataListMode)
+        {
+            _currentList = &_dataList;
+
+            // commit changes from __dataSearchList to _dataList, if any
+            if (_editedInSearchMode)
+                commitChangesInSearchList();
+
+            _editedInSearchMode = false;
+        }
+
+        // search list
+        else if ( _currentMode == DataSearchMode)
+        {
+            _currentList = &_dataSearchList;
+        }
+
+        endResetModel();
+    }
 }
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
@@ -250,6 +289,13 @@ bool DataModel::commitDataList( const QList<DataEntry> &parseList)
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
 
+void DataModel::commitChangesInSearchList()
+{
+
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
 void DataModel::addEntry( const DataEntry &entry)
 {
     _dataList.push_back( entry );
@@ -258,13 +304,43 @@ void DataModel::addEntry( const DataEntry &entry)
 }
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
-
-void DataModel::search( const QString &filter)
+void DataModel::duplicateEntryNum( int num)
 {
+    const DataEntry source = _currentList->at(num);
+
+    _currentList->insert( num+1 , DataEntry(source) );
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void DataModel::deleteEntryNum( int num)
+{
+    _currentList->removeAt( num);
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+int DataModel::search( const QString &filter)
+{
+
+
+    _dataSearchList.clear();
     foreach (const DataEntry &entry, _dataList)
     {
-
+        if ( entry.contains( filter) )
+        {
+            _dataSearchList.push_back( entry );
+        }
     }
+
+    ChangePresentationModeTo( DataSearchMode);
+
+    return _dataSearchList.size();
+}
+
+void DataModel::clearSearch()
+{
+    ChangePresentationModeTo( DataListMode );
 }
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
@@ -284,8 +360,29 @@ bool DataModel::loadXML( const QString &fromFile)
     xmlData.setContent( &f );
     f.close();
 
+    /* HEADER parse*/
 
-    QDomNodeList list = xmlData.elementsByTagName("RUSHES");
+    QDomNode header = xmlData.elementsByTagName(XML_TAG_HEADER).at(0);
+
+    for ( QDomNode node = header.firstChild(); !node.isNull() ; node=node.nextSibling()  )
+    {
+        if( node.isElement() )
+        {
+            const QDomElement elem = node.toElement();
+            qDebug() << "element " << elem.tagName() << " val " << elem.text();
+
+            if (elem.tagName() == XML_TAG_SAVE_DATE)
+                _date = QDateTime::fromString(elem.text() , Qt::ISODate);
+
+
+        }
+
+    }
+
+    /* RUHSES list parse*/
+
+    QDomNodeList list = xmlData.elementsByTagName( XML_TAG_RUSHES);
+    qDebug() << "list size " << list.size();
     QDomNode rushes = list.at(0);
 
     beginResetModel();
@@ -293,7 +390,7 @@ bool DataModel::loadXML( const QString &fromFile)
     _dataList.clear();
     for ( QDomNode node = rushes.firstChild(); !node.isNull() ; node=node.nextSibling()  )
     {
-        if (node.isElement() && (node.toElement().tagName()=="ENTRY") )
+        if (node.isElement() && (node.toElement().tagName()==XML_TAG_ENTRY) )
         {
             const QDomElement elem = node.toElement();
 
@@ -311,19 +408,19 @@ bool DataModel::loadXML( const QString &fromFile)
                 {
                     const QDomElement elem = attr.at(i).toElement();
 
-                    if ( elem.tagName() == "PATH")
+                    if ( elem.tagName() == XML_TAG_PATH)
                         entry.filePath = elem.text();
 
-                    else if ( elem.tagName() == "PROJECT" )
+                    else if ( elem.tagName() == XML_TAG_PROJECT )
                         entry.projectName = elem.text();
 
-                    else if ( elem.tagName() == "DESC" )
+                    else if ( elem.tagName() == XML_TAG_DESC )
                         entry.description = elem.text();
 
-                    else if ( elem.tagName() == "REM" )
+                    else if ( elem.tagName() == XML_TAG_REMARK )
                         entry.remarques = elem.text();
 
-                    else if ( elem.tagName() == "TC")
+                    else if ( elem.tagName() == XML_TAG_TIMECODE)
                         entry.timecode = Timecode(elem.text() );
                 }
 
@@ -377,20 +474,28 @@ bool DataModel::compareAndSaveXML( const QString &toFile)
     xmlWriter.setAutoFormatting(true);
     xmlWriter.writeStartDocument();
 
-    xmlWriter.writeStartElement("RUSHES");
+    xmlWriter.writeStartElement(XML_TAG_ROOT);
+
+    xmlWriter.writeStartElement(XML_TAG_HEADER);
+    xmlWriter.writeTextElement(XML_TAG_SAVE_DATE , QDateTime::currentDateTime().toString( Qt::ISODate) );
+    xmlWriter.writeEndElement();
+
+    xmlWriter.writeStartElement(XML_TAG_RUSHES);
 
     foreach (const DataEntry &entry, _dataList)
     {
-        xmlWriter.writeStartElement("ENTRY");
-        xmlWriter.writeTextElement("PROJECT", entry.projectName );
-        xmlWriter.writeTextElement("DESC",entry.description);
-        xmlWriter.writeTextElement("TC",Timecode::tcToQString(entry.timecode) );
-        xmlWriter.writeTextElement("REM",entry.remarques );
-        xmlWriter.writeTextElement("PATH",entry.filePath);
+        xmlWriter.writeStartElement(XML_TAG_ENTRY);
+        xmlWriter.writeTextElement(XML_TAG_PROJECT, entry.projectName );
+        xmlWriter.writeTextElement(XML_TAG_DESC,entry.description);
+        xmlWriter.writeTextElement(XML_TAG_TIMECODE,Timecode::tcToQString(entry.timecode) );
+        xmlWriter.writeTextElement(XML_TAG_REMARK,entry.remarques );
+        xmlWriter.writeTextElement(XML_TAG_PATH,entry.filePath);
         xmlWriter.writeEndElement();
     }
 
-    xmlWriter.writeEndElement(); /*RUSHES*/
+    xmlWriter.writeEndElement(); /*XML_TAG_RUSHES*/
+
+    xmlWriter.writeEndElement(); /*XML_TAG_ROOT*/
 
     xmlWriter.writeEndDocument();
 

@@ -34,6 +34,9 @@ public:
         return getProjectDirectory();
     }
 
+    void logStatus( const QString &msg);
+
+    bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
     void updateDirClicked();
@@ -43,8 +46,21 @@ public slots:
 
     void PreferencesClicked();
 
-    void verticalHeaderDoubleClicked( int index );
 
+
+    void PullServerClicked();
+    void PushServerClicked();
+
+    void searchClicked();
+    void clearSearchClicked();
+
+    //actions from TableView
+    void verticalHeaderDoubleClicked( int index );
+    void customMenuRequested(QPoint pos);
+
+    // context menu
+    void duplicateLineClicked();
+    void deleteLineClicked();
 
 private:
     void closeEvent( QCloseEvent *event) ;

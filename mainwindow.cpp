@@ -5,7 +5,7 @@
 #include <QMessageBox>
 
 
-
+#include <QKeyEvent>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -33,7 +33,18 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->tableView->verticalHeader(), SIGNAL(sectionDoubleClicked(int)) ,
                 this ,SLOT(verticalHeaderDoubleClicked(int)));
 
+    ui->tableView->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect( ui->tableView->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)),
+                SLOT(customMenuRequested(QPoint)));
 
+    connect(ui->actionPousser , SIGNAL(triggered()) , this , SLOT(PushServerClicked()) );
+    connect(ui->actionTirer, SIGNAL(triggered()) , this , SLOT(PullServerClicked()) );
+
+    connect(ui->actionDelete    , SIGNAL( triggered() ) , this , SLOT( deleteLineClicked() ) );
+    connect(ui->actionDuplicate , SIGNAL( triggered() ) , this , SLOT( duplicateLineClicked() ) );
+
+    connect(ui->searchButton, SIGNAL(clicked()) , this , SLOT(searchClicked()) );
+    connect(ui->clrSearchButton, SIGNAL(clicked()) , this , SLOT(clearSearchClicked()) );
     setWindowTitle(APP_NAME);
 
     /* restore settings */
@@ -45,7 +56,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tableView->horizontalHeader()->restoreState( settings.value("HoriTab").toByteArray() );
 
+    ui->searchFiled->installEventFilter( this);
     updateDirClicked();
+
+
 
 }
 
@@ -54,6 +68,11 @@ MainWindow::~MainWindow()
     delete ui;
 
 
+}
+
+void MainWindow::logStatus( const QString &msg)
+{
+    statusBar()->showMessage( msg );
 }
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
@@ -168,10 +187,51 @@ void MainWindow::saveSettings()
        UI Slots
 */
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
 void MainWindow::closeEvent( QCloseEvent *event)
 {
     saveSettings();
 }
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::searchClicked()
+{
+    if (_model.getCurrentMode() == DataSearchMode)
+        _model.clearSearch();
+
+    if ( ui->searchFiled->text().isEmpty() )
+        return;
+
+    const QString str = ui->searchFiled->text();
+    qDebug() << "search for " << str;
+
+    const int size = _model.search( str );
+
+    QString retSearch;
+    if (size == 0)
+        retSearch = "No entries found";
+
+    else if ( size == 1)
+        retSearch = "1 entry found";
+
+    else
+        retSearch = QString("%1 entries found").arg(size);
+
+    ui->searchLabel->setText( retSearch );
+
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::clearSearchClicked()
+{
+    _model.clearSearch();
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
 
 void MainWindow::updateDirClicked()
 {
@@ -199,6 +259,7 @@ void MainWindow::updateDirClicked()
             _model.parseProjectDirectory( getProjectDirectory() );
     }
 
+    logStatus( _model.getDataBaseDate().toString() );
 
 
 }
@@ -247,13 +308,92 @@ void MainWindow::PreferencesClicked()
 
 }
 
-
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
 void MainWindow::verticalHeaderDoubleClicked( int index )
 {
+
     const DataEntry entry = _model.getEntryForIndex( index);
 
     qDebug() << "Should play " << entry.filePath << "at TC " << Timecode::tcToQString(entry.timecode) ;
 }
 
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::duplicateLineClicked()
+{
+    if (ui->tableView->selectionModel()->selection().indexes().empty())
+        return;
+
+    const int row =  ui->tableView->selectionModel()->selection().indexes().at(0).row();
+
+    qDebug() << "add line below " <<row;
+
+    _model.duplicateEntryNum( row );
+
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::deleteLineClicked()
+{
+    if (ui->tableView->selectionModel()->selection().indexes().empty())
+        return;
+
+    const int row =  ui->tableView->selectionModel()->selection().indexes().at(0).row();
+
+    qDebug() << "delete line" <<row;
+
+    _model.deleteEntryNum( row );
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::customMenuRequested(QPoint pos)
+{
+    QModelIndex index=ui->tableView->indexAt(pos);
+
+    ui->tableView->selectRow(index.row());
+
+    QMenu *menu=new QMenu(this);
+
+    menu->addAction( ui->actionDuplicate );
+    menu->addAction( ui->actionDelete );
+
+    menu->popup(ui->tableView->verticalHeader()->viewport()->mapToGlobal(pos));
+
+}
+
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
+    if (object == ui->searchFiled && event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+        if (keyEvent->key() == Qt::Key_Return)
+        {
+            searchClicked();
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::PullServerClicked()
+{
+    qDebug() << "Pull file to server";
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
+
+void MainWindow::PushServerClicked()
+{
+    qDebug() << "Push file to server";
+}
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
 
